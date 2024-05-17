@@ -17,11 +17,9 @@ public class MeshSlicer : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
         bool hasHit = Physics.Linecast(startSlicePoint.position, endSlicePoint.position.normalized, out RaycastHit hit, sliceableLayer);
 
-        Debug.DrawLine(startSlicePoint.position, endSlicePoint.position, Color.red);
-
+        print(hasHit);
         if (hasHit)
         {
             GameObject target = hit.transform.gameObject;
@@ -45,18 +43,18 @@ public class MeshSlicer : MonoBehaviour
             SetupSlicedComponent(lowerHull);
 
             Destroy(target.gameObject);
-
-            print(lowerHull);
         }
     }
 
     public void SetupSlicedComponent(GameObject slicedObject)
     {
         Rigidbody rigid = slicedObject.GetComponent<Rigidbody>();
+
         if (rigid == null)
         {
             rigid = slicedObject.AddComponent<Rigidbody>();
         }
+
         MeshCollider collider = slicedObject.AddComponent<MeshCollider>();
         slicedObject.layer = 6;
         collider.convex = true;
